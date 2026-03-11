@@ -4,6 +4,7 @@ A full-stack food ordering web application that allows users to browse menu item
 The system includes user authentication, dynamic menu loading from MongoDB, and user-specific carts.
 
 **🚀 Features**
+
 1️⃣ User Management
 
 User Registration
