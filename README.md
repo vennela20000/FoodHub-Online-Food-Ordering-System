@@ -111,6 +111,3 @@ Responsive mobile UI
 Order history
 
 
-
-GitHub:
-https://github.com/vennela20000
