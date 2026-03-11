@@ -1,9 +1,9 @@
-🍔 FoodHub – Online Food Ordering System
+**🍔 FoodHub – Online Food Ordering System**
 
 A full-stack food ordering web application that allows users to browse menu items, add food to cart, place orders, and select payment methods.
 The system includes user authentication, dynamic menu loading from MongoDB, and user-specific carts.
 
-🚀 Features
+**🚀 Features**
 1️⃣ User Management
 
 User Registration
@@ -54,7 +54,7 @@ Feedback / Contact form
 
 Messages stored in database
 
-🛠 Technologies Used
+**🛠 Technologies Used**
 
 HTML
 
@@ -68,7 +68,7 @@ MongoDB
 
 Git & GitHub
 
-📂 Project Structure
+**📂 Project Structure**
 FoodHub
 │
 ├── css
@@ -91,9 +91,11 @@ FoodHub
 ├── package.json
 ├── package-lock.json
 └── README.md
-🖥 Application Flow
+
+**🖥 Application Flow**
 Register → Login → Profile → Menu → Cart → Order → Payment → Success
-🎯 Future Improvements
+
+**🎯 Future Improvements**
 
 Online payment gateway integration
 
@@ -107,9 +109,7 @@ Responsive mobile UI
 
 Order history
 
-👩‍💻 Author
 
-Vennela Daripally
 
 GitHub:
 https://github.com/vennela20000
