@@ -1,18 +1,17 @@
-🍔 FoodHub – Online Food Ordering System
+**🍔 FoodHub – Online Food Ordering System**
 
 A full-stack food ordering web application that allows users to browse menu items, add food to cart, place orders, and select payment methods.
 The system includes user authentication, dynamic menu loading from MongoDB, and user-specific carts.
 
-🚀 Features
-1️⃣ User Management
+**🚀 Features**
+  1️⃣ User Management
+        User Registration
 
-User Registration
+      Login System
 
-Login System
+      Profile page for users
 
-Profile page for users
-
-Session-based user access
+      Session-based user access
 
 2️⃣ Food Ordering
 
