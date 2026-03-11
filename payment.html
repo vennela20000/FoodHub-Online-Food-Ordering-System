@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Payment</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>FoodHub</h1>
+
+<nav>
+<a href="profile.html">Profile</a>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="order.html">Order</a>
+<a href="payment.html">Payment</a>
+<a href="contact.html">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+
+</header>
+
+<section class="payment">
+
+<h2>Select Payment Method</h2>
+
+<form id="paymentForm">
+
+<label>
+<input type="radio" name="payment" required> UPI
+</label><br><br>
+
+<label>
+<input type="radio" name="payment"> Credit/Debit Card
+</label><br><br>
+
+<label>
+<input type="radio" name="payment"> Cash on Delivery
+</label><br><br>
+
+<button type="submit" class="btn">Confirm Payment</button>
+
+</form>
+
+</section>
+
+<script>
+
+
+let user = localStorage.getItem("user");
+
+if(!user)
+{
+alert("Please login first");
+window.location.href="login.html";
+}
+
+
+let cartKey = "cart_" + user;
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+document.getElementById("cartCount").innerText = cart.length;
+
+
+
+document.getElementById("paymentForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+
+let selectedPayment = document.querySelector('input[name="payment"]:checked');
+
+if(!selectedPayment)
+{
+alert("Please select a payment method");
+return;
+}
+
+
+localStorage.removeItem(cartKey);
+
+
+window.location.href = "success.html";
+
+});
+
+
+
+function logout()
+{
+localStorage.removeItem("user");
+window.location.href="login.html";
+}
+
+</script>
+</body>
+
+</html>

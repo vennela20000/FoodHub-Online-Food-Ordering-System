@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Menu</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+<h1>FoodHub</h1>
+
+<nav>
+<a href="profile.html">Profile</a>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="order.html">Order</a>
+<a href="payment.html">Payment</a>
+<a href="contact.html">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+
+</header>
+
+<section class="menu">
+
+<h2>Our Menu</h2>
+
+<div class="menu-items" id="menuItems"></div>
+
+</section>
+
+
+<script>
+
+
+let user = localStorage.getItem("user");
+
+if(!user)
+{
+window.location.href="login.html";
+}
+
+
+
+fetch("/menu-data")
+.then(function(response){
+return response.json();
+})
+.then(function(data){
+
+let container = document.getElementById("menuItems");
+
+for(let i=0;i<data.length;i++)
+{
+
+container.innerHTML +=
+`
+<div class="item">
+
+<img src="images/${data[i].image}" width="150">
+
+<h3>${data[i].name}</h3>
+
+<p>₹${data[i].price}</p>
+
+<button onclick="addToCart('${data[i].name}',${data[i].price})">
+Add to Cart
+</button>
+
+</div>
+`;
+
+}
+
+});
+
+
+
+function addToCart(name,price)
+{
+
+let user = localStorage.getItem("user");
+
+let cartKey = "cart_" + user;
+
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+cart.push({
+name:name,
+price:price
+});
+
+localStorage.setItem(cartKey,JSON.stringify(cart));
+
+alert(name + " added to cart");
+
+updateCartCount();
+
+}
+
+
+
+function updateCartCount()
+{
+
+let user = localStorage.getItem("user");
+
+let cartKey = "cart_" + user;
+
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+document.getElementById("cartCount").innerText = cart.length;
+
+}
+
+updateCartCount();
+
+
+
+function logout()
+{
+localStorage.removeItem("user");
+window.location.href="login.html";
+}
+
+</script>
+
+</body>
+</html>

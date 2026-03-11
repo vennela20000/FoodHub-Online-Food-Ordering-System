@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+<h1>FoodHub</h1>
+
+<nav>
+<a href="profile.html">Profile</a>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart</a>
+<a href="order.html">Order</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+</header>
+
+<section class="profile">
+
+<h2>Your Profile</h2>
+
+<p><strong>Email:</strong> <span id="emailDisplay"></span></p>
+
+<h3>Your Addresses</h3>
+
+<ul id="addressList"></ul>
+
+<input type="text" id="newAddress" placeholder="Add new address">
+
+<button onclick="addAddress()">Add Address</button>
+
+</section>
+
+
+<script>
+
+let user = localStorage.getItem("user");
+
+if(!user)
+{
+window.location.href="login.html";
+}
+
+document.getElementById("emailDisplay").innerText = user;
+
+let profileKey = "profile_" + user;
+
+let profile = JSON.parse(localStorage.getItem(profileKey)) || {addresses:[]};
+
+function loadAddresses()
+{
+
+let list = document.getElementById("addressList");
+
+list.innerHTML="";
+
+profile.addresses.forEach(function(addr,index){
+
+list.innerHTML += `
+<li>
+${addr}
+<button onclick="editAddress(${index})">Edit</button>
+</li>
+`;
+
+});
+
+}
+
+loadAddresses();
+
+
+function addAddress()
+{
+
+let addr = document.getElementById("newAddress").value;
+
+if(addr==="")
+{
+alert("Enter address");
+return;
+}
+
+profile.addresses.push(addr);
+
+localStorage.setItem(profileKey,JSON.stringify(profile));
+
+document.getElementById("newAddress").value="";
+
+loadAddresses();
+
+}
+
+
+function editAddress(index)
+{
+
+let newAddr = prompt("Edit Address",profile.addresses[index]);
+
+if(newAddr)
+{
+profile.addresses[index] = newAddr;
+
+localStorage.setItem(profileKey,JSON.stringify(profile));
+
+loadAddresses();
+}
+
+}
+
+
+function logout()
+{
+localStorage.removeItem("user");
+window.location.href="login.html";
+}
+
+</script>
+
+</body>
+</html>

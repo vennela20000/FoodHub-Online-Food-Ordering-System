@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Login</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>FoodHub</h1>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="menu.html">Menu</a>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+<a href="contact.html">Contact</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+</nav>
+
+</header>
+
+<section class="login">
+
+<h2>Login</h2>
+
+<form id="loginForm">
+
+<input type="email" id="email" placeholder="Email" required><br><br>
+
+<input type="password" id="password" placeholder="Password" required><br><br>
+
+<button type="submit">Login</button>
+
+</form>
+
+<p>New user?</p>
+
+<a href="register.html">Register Here</a>
+
+</section>
+
+<script>
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let email=document.getElementById("email").value;
+let password=document.getElementById("password").value;
+
+fetch("/login",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded"
+},
+body:"email="+email+"&password="+password
+})
+.then(function(response){
+return response.text();
+})
+.then(function(message){
+
+alert(message);
+
+if(message=="Login Successful")
+{
+localStorage.setItem("user",email);
+window.location.href="profile.html";
+}
+
+});
+
+});
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+document.getElementById("cartCount").innerText = cart.length;
+
+</script>
+
+</body>
+</html>

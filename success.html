@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Order Success - FoodHub</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>FoodHub</h1>
+
+<nav>
+<a href="profile.html">Profile</a>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="contact.html">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+
+</header>
+
+
+<section class="success">
+
+<h2>🎉 Order Placed Successfully!</h2>
+
+<p>Your order has been confirmed and is being prepared.</p>
+
+<div class="order-box">
+
+<p><strong>Order ID:</strong> <span id="orderId"></span></p>
+
+<p><strong>Estimated Delivery:</strong> 30-40 Minutes</p>
+
+<p>Thank you for ordering with FoodHub ❤️</p>
+
+</div>
+
+<br>
+
+<a href="menu.html" class="btn">Order More Food</a>
+
+</section>
+
+
+<script>
+
+
+let user = localStorage.getItem("user");
+
+if(!user)
+{
+window.location.href="login.html";
+}
+
+
+
+let cartKey = "cart_" + user;
+
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+document.getElementById("cartCount").innerText = cart.length;
+
+
+
+function generateOrderId()
+{
+let random = Math.floor(100000 + Math.random()*900000);
+return "FH" + random;
+}
+
+document.getElementById("orderId").innerText = generateOrderId();
+
+
+
+function logout()
+{
+localStorage.removeItem("user");
+window.location.href="login.html";
+}
+
+</script>
+
+</body>
+
+</html>

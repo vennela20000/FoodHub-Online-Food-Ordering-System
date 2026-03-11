@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>FoodHub</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>FoodHub</h1>
+
+<nav id="navLinks"></nav>
+
+</header>
+
+
+<section class="hero">
+
+<h2>🍔 Delicious Food Delivered Fast</h2>
+
+<p>Order your favourite meals in minutes.</p>
+
+<a href="menu.html" class="btn">Explore Menu</a>
+
+</section>
+
+
+<section class="features">
+
+<h2>Why Choose FoodHub?</h2>
+
+<div class="feature-container">
+
+<div class="feature">
+<h3>🚀 Fast Delivery</h3>
+<p>Get your food delivered quickly to your doorstep.</p>
+</div>
+
+<div class="feature">
+<h3>🍕 Fresh Food</h3>
+<p>Prepared by top chefs with fresh ingredients.</p>
+</div>
+
+<div class="feature">
+<h3>💳 Easy Payment</h3>
+<p>Secure and flexible payment options.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+
+
+let user = localStorage.getItem("user");
+
+let nav = document.getElementById("navLinks");
+
+if(user)
+{
+nav.innerHTML = `
+<a href="profile.html">Profile</a>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="order.html">Order</a>
+<a href="contact.html">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+`;
+}
+else
+{
+nav.innerHTML = `
+<a href="index.html">Home</a>
+<a href="menu.html">Menu</a>
+<a href="register.html">Register</a>
+<a href="login.html">Login</a>
+<a href="contact.html">Contact</a>
+`;
+}
+
+
+/* -------- CART COUNT -------- */
+
+if(user)
+{
+let cartKey = "cart_" + user;
+
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+let count = document.getElementById("cartCount");
+
+if(count)
+{
+count.innerText = cart.length;
+}
+}
+
+
+
+function logout()
+{
+localStorage.removeItem("user");
+window.location.href="login.html";
+}
+
+</script>
+
+</body>
+
+</html>

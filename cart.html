@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cart</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+<h1>FoodHub</h1>
+
+<nav>
+<a href="profile.html">Profile</a>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="order.html">Order</a>
+<a href="payment.html">Payment</a>
+<a href="contact.html">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+
+</header>
+
+<section class="cart">
+
+<h2>Your Cart</h2>
+
+<table border="1">
+
+<tr>
+<th>Food</th>
+<th>Price</th>
+<th>Quantity</th>
+<th>Total</th>
+<th>Action</th>
+</tr>
+
+<tbody id="cartTable"></tbody>
+
+</table>
+
+<h3 id="totalAmount"></h3>
+
+<a href="order.html" class="btn">Proceed to Order</a>
+
+</section>
+
+<script>
+
+
+let user = localStorage.getItem("user");
+
+if(!user)
+{
+alert("Please login first");
+window.location.href="login.html";
+}
+
+
+
+
+let cartKey = "cart_" + user;
+
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+let table = document.getElementById("cartTable");
+
+let total = 0;
+
+for(let i=0;i<cart.length;i++)
+{
+
+let price = cart[i].price;
+let quantity = 1;
+let rowTotal = price * quantity;
+
+table.innerHTML += `
+<tr>
+<td>${cart[i].name}</td>
+<td>₹${price}</td>
+<td>${quantity}</td>
+<td>₹${rowTotal}</td>
+<td>
+<button onclick="removeItem(${i})">Remove</button>
+</td>
+</tr>
+`;
+
+total += rowTotal;
+
+}
+
+document.getElementById("totalAmount").innerText =
+"Total Amount: ₹" + total;
+
+
+
+function removeItem(index)
+{
+
+cart.splice(index,1);
+
+localStorage.setItem(cartKey,JSON.stringify(cart));
+
+location.reload();
+
+}
+
+
+
+
+document.getElementById("cartCount").innerText = cart.length;
+
+
+
+function logout()
+{
+localStorage.removeItem("user");
+window.location.href="login.html";
+}
+
+</script>
+
+</body>
+</html>

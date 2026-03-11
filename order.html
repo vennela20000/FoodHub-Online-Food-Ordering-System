@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Order</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>FoodHub</h1>
+
+<nav>
+<a href="profile.html">Profile</a>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<a href="order.html">Order</a>
+<a href="payment.html">Payment</a>
+<a href="contact.html">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+
+</header>
+
+<section class="order">
+
+<h2>Delivery Details</h2>
+
+<form id="orderForm">
+
+<input type="hidden" id="email" name="email">
+
+<label>Name</label><br>
+<input type="text" id="name" name="name" required><br><br>
+
+<label>Phone</label><br>
+<input type="text" id="phone" name="phone" required><br><br>
+
+<label>Address</label><br>
+<textarea id="address" name="address" required></textarea><br><br>
+
+<label>City</label><br>
+<input type="text" id="city" name="city" required><br><br>
+
+<label>Pincode</label><br>
+<input type="text" id="pincode" name="pincode" required><br><br>
+
+<button type="submit" class="btn">Proceed to Payment</button>
+
+</form>
+
+</section>
+
+<script>
+
+
+let user = localStorage.getItem("user");
+
+if(!user)
+{
+alert("Please login first");
+window.location.href="login.html";
+}
+
+
+
+document.getElementById("email").value = user;
+
+
+
+fetch("/last-order?email=" + user)
+.then(function(response){
+return response.json();
+})
+.then(function(data){
+
+if(data)
+{
+document.getElementById("name").value = data.name || "";
+document.getElementById("phone").value = data.phone || "";
+document.getElementById("address").value = data.address || "";
+document.getElementById("city").value = data.city || "";
+document.getElementById("pincode").value = data.pincode || "";
+}
+
+});
+
+
+
+let cartKey = "cart_" + user;
+
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+document.getElementById("cartCount").innerText = cart.length;
+
+
+
+function logout()
+{
+localStorage.removeItem("user");
+window.location.href="login.html";
+}
+
+document.getElementById("orderForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+let name = document.getElementById("name").value;
+let phone = document.getElementById("phone").value;
+let address = document.getElementById("address").value;
+let city = document.getElementById("city").value;
+let pincode = document.getElementById("pincode").value;
+let email = document.getElementById("email").value;
+
+
+if(phone.length !== 10)
+{
+alert("Phone number must be 10 digits");
+return;
+}
+
+fetch("/order",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded"
+},
+body:
+"email="+email+
+"&name="+name+
+"&phone="+phone+
+"&address="+address+
+"&city="+city+
+"&pincode="+pincode
+})
+
+.then(function(response){
+return response.text();
+})
+
+.then(function(message){
+
+if(message === "Order Placed Successfully")
+{
+window.location.href = "payment.html";
+}
+else
+{
+alert(message);
+}
+
+});
+
+});
+</script>
+
+</body>
+</html>
